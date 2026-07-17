@@ -22,3 +22,25 @@ theme = "terminal"
       themeColor = "green"
       [languages.en.params.logo]
         logoText = "Cyborg_m"
+        logoHomeLink = "/"
+      [languages.en.menu]
+        [[languages.en.menu.main]]
+          identifier = "about_me"
+          name = "About_Me"
+          url = "/about_me"
+        [[languages.en.menu.main]]
+          identifier = "services"
+          name = "Services"
+          url = "/services"
+        [[languages.en.menu.main]]
+          identifier = "hackerone"
+          name = "HackerOne"
+          url = "https://hackerone.com/cyborg_m?type=user"
+        [[languages.en.menu.main]]
+          identifier = "x"
+          name = "X"
+          url = "https://x.com/MayurSalve333"
+        [[languages.en.menu.main]]
+          identifier = "linkedin"
+          name = "LinkedIn"
+          url = "https://www.linkedin.com/in/mayur-salve-204432276"
