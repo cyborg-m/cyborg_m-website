@@ -7,3 +7,35 @@
   --btn-bg: #4caf50;
   --btn-color: #0a0e0a;
 }
+
+body {
+  background-color: var(--background);
+  background-image: url("/img/circuit-bg.svg");
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  background-attachment: fixed;
+}
+
+.logo {
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
+a {
+  transition: opacity 0.2s ease, text-shadow 0.2s ease;
+}
+
+a:hover {
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  opacity: 0.9;
+}
+
+.post,
+.list article,
+main {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

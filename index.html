@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyborg_m — Mayur Salve | Penetration Testing &amp; Security Audits</title>
+<meta name="description" content="Mayur Salve (Cyborg_m) — Penetration Tester, Ethical Hacker, Security Researcher. Web application pentesting, network audits, and full VAPT reports for companies that need to know where they're exposed.">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cyborg_m — Mayur Salve | Penetration Testing & Security Audits">
+<meta property="og:description" content="Penetration testing, network audits, and VAPT reports for companies that need to know where they're exposed.">
+<meta property="og:image" content="images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cyborg_m — Mayur Salve | Security Researcher">
+<meta name="twitter:description" content="Penetration testing, network audits, and VAPT reports.">
+<meta name="twitter:image" content="images/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f0d;
+    --surface: #121815;
+    --surface-2: #161d19;
+    --border: #223028;
+    --text: #e7ece8;
+    --muted: #8fa197;
+    --muted-2: #5f6f66;
+    --accent: #39d97a;
+    --accent-dim: #1f6b3f;
+    --accent-glow: rgba(57, 217, 122, 0.15);
+    --alert: #ff5f56;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 15, 13, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav {
+    max-width: 1100px; margin: 0 auto; padding: 18px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo {
+    font-family: var(--mono); font-weight: 700; font-size: 1.05rem;
+    letter-spacing: 0.02em; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo::before {
+    content: ''; width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .navlinks { display: none; gap: 26px; font-size: 0.88rem; }
+  .navlinks a { color: var(--muted); transition: color 0.2s ease; }
+  .navlinks a:hover { color: var(--accent); }
+  @media (min-width: 780px) { .navlinks { display: flex; } }
+
+  .hero { padding: 96px 0 72px; display: grid; gap: 48px; }
+  .hood-watermark { position: absolute; top: 10px; right: -20px; width: 160px; height: 160px; opacity: 0.06; pointer-events: none; z-index: -1; }
+  @media (max-width: 899px) { .hood-watermark { display: none; } }
+  @media (min-width: 900px) { .hero { grid-template-columns: 1.1fr 1fr; align-items: center; padding: 120px 0 96px; } }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.8rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: '['; color: var(--muted-2); }
+  .eyebrow::after { content: ']'; color: var(--muted-2); }
+  h1 {
+    font-weight: 800; font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+    line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  h1 span { color: var(--accent); }
+  .hero-sub { color: var(--muted); font-size: 1.08rem; max-width: 46ch; margin-bottom: 32px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 0.88rem; font-weight: 500;
+    padding: 13px 22px; border-radius: 6px; display: inline-flex;
+    align-items: center; gap: 8px; transition: all 0.2s ease; border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #05130b; font-weight: 600; }
+  .btn-primary:hover { background: #4ee88c; transform: translateY(-1px); }
+  .btn-ghost { border-color: var(--border); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .terminal {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 20px 60px -20px var(--accent-glow);
+  }
+  .term-bar {
+    background: var(--surface-2); padding: 11px 16px; display: flex;
+    align-items: center; gap: 8px; border-bottom: 1px solid var(--border);
+  }
+  .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .term-dot:nth-child(1) { background: #ff5f56; }
+  .term-dot:nth-child(2) { background: #ffbd2e; }
+  .term-dot:nth-child(3) { background: #27c93f; }
+  .term-title { margin-left: 10px; font-family: var(--mono); font-size: 0.75rem; color: var(--muted-2); }
+  .term-body { padding: 20px 18px; font-family: var(--mono); font-size: 0.82rem; line-height: 1.9; min-height: 260px; position: relative; }
+  .scanline {
+    position: absolute; left: 0; right: 0; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--accent-glow) 45%, transparent 90%);
+    opacity: 0.7; pointer-events: none;
+    animation: scan 5s linear infinite;
+  }
+  @keyframes scan { 0% { top: -40px; } 100% { top: 100%; } }
+  .term-line { opacity: 0; animation: appear 0.3s forwards; white-space: pre-wrap; }
+  .term-line.ok { color: var(--accent); }
+  .term-line.warn { color: #ffbd2e; }
+  .term-line.dim { color: var(--muted-2); }
+  .term-line.cmd { color: var(--text); }
+  .term-line .prompt { color: var(--accent); }
+  @keyframes appear { to { opacity: 1; } }
+  .cursor { display: inline-block; width: 7px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .trust { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .trust-label { font-family: var(--mono); font-size: 0.72rem; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .badge {
+    font-family: var(--mono); font-size: 0.76rem; color: var(--muted);
+    border: 1px solid var(--border); padding: 7px 12px; border-radius: 5px;
+    background: var(--surface); display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.2s ease;
+  }
+  a.badge:hover { border-color: var(--accent); color: var(--accent); }
+  .badge .verify-mark { color: var(--accent); font-size: 0.7rem; }
+
+  section { padding: 88px 0; }
+  .section-head { margin-bottom: 48px; max-width: 60ch; }
+  .section-eyebrow { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.06em; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .section-desc { color: var(--muted); font-size: 1rem; }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  .services-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+  .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 30px 26px; transition: border-color 0.25s ease, transform 0.25s ease; }
+  .service-card:hover { border-color: var(--accent-dim); transform: translateY(-3px); }
+  .service-icon { width: 42px; height: 42px; border: 1px solid var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 20px; }
+  .service-icon svg, .why-mark svg { width: 20px; height: 20px; }
+  .service-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 10px; }
+  .service-card p { color: var(--muted); font-size: 0.92rem; }
+
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tag { font-family: var(--mono); font-size: 0.85rem; padding: 10px 16px; border: 1px solid var(--border); border-radius: 6px; color: var(--text); background: var(--surface); transition: all 0.2s ease; }
+  .tag:hover { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
+
+  /* Why section */
+  .why-grid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .why-grid { grid-template-columns: 1fr 1fr; } }
+  .why-item { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+  .why-mark { color: var(--accent); flex-shrink: 0; width: 24px; margin-top: 2px; }
+  .why-item h4 { font-size: 1rem; margin-bottom: 6px; }
+  .why-item p { color: var(--muted); font-size: 0.9rem; }
+
+  /* Process */
+  .process-grid { display: grid; gap: 24px; grid-template-columns: 1fr; counter-reset: step; }
+  @media (min-width: 760px) { .process-grid { grid-template-columns: repeat(3, 1fr); } }
+  .process-step { position: relative; padding: 28px 24px 24px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+  .process-num {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--accent);
+    border: 1px solid var(--accent-dim); width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  }
+  .process-step h3 { font-size: 1.02rem; margin-bottom: 8px; }
+  .process-step p { color: var(--muted); font-size: 0.9rem; }
+
+  /* About + photo */
+  .about-grid { display: grid; gap: 40px; }
+  @media (min-width: 860px) { .about-grid { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
+  .photo-frame {
+    width: 100%; max-width: 240px; aspect-ratio: 1; border-radius: 14px;
+    border: 1px solid var(--border); background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 20px 50px -25px var(--accent-glow);
+    margin-bottom: 18px;
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder { font-family: var(--mono); font-size: 0.72rem; color: var(--muted-2); text-align: center; padding: 20px; }
+  .about-text p { color: var(--muted); margin-bottom: 16px; }
+  .about-text strong { color: var(--text); }
+  .stat-list { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+  .stat { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--border); font-family: var(--mono); }
+  .stat:first-child { border-top: 1px solid var(--border); }
+  .stat-label { color: var(--muted); font-size: 0.85rem; }
+  .stat-value { color: var(--accent); font-size: 0.85rem; text-align: right; max-width: 55%; }
+
+  /* Cert gallery */
+  .cert-grid { display: grid; gap: 18px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 700px) { .cert-grid { grid-template-columns: repeat(4, 1fr); } }
+  .cert-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+  .cert-img-box { aspect-ratio: 4/3; background: var(--surface-2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .cert-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cert-placeholder { font-family: var(--mono); font-size: 0.65rem; color: var(--muted-2); text-align: center; padding: 10px; }
+  .cert-caption { padding: 10px 12px; font-size: 0.76rem; color: var(--muted); font-family: var(--mono); }
+
+  /* Contact + form */
+  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 48px 36px; }
+  .contact-box .section-head { margin: 0 auto 32px; text-align: center; max-width: 50ch; }
+  .contact-layout { display: grid; gap: 36px; }
+  @media (min-width: 800px) { .contact-layout { grid-template-columns: 1fr 1fr; } }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-family: var(--mono); font-size: 0.76rem; color: var(--muted); margin-bottom: 6px; }
+  .form-group input, .form-group textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 11px 14px; color: var(--text); font-family: var(--sans); font-size: 0.9rem;
+  }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-success { display: none; color: var(--accent); font-family: var(--mono); font-size: 0.88rem; padding: 14px; border: 1px solid var(--accent-dim); border-radius: 6px; background: var(--accent-glow); }
+  .contact-methods { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .contact-methods a { font-family: var(--mono); font-size: 0.85rem; padding: 11px 16px; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s ease; }
+  .contact-methods a:hover { border-color: var(--accent); color: var(--accent); }
+  .social-row { display: flex; gap: 20px; }
+  .social-row a { color: var(--muted); font-family: var(--mono); font-size: 0.85rem; transition: color 0.2s ease; }
+  .social-row a:hover { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; color: var(--muted-2); font-family: var(--mono); font-size: 0.78rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Cyborg_m</div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-primary" style="padding:9px 16px;font-size:0.8rem;">Get a quote</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="padding-top:64px;position:relative;">
+    <svg class="hood-watermark" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M100 20 C60 20 40 55 40 90 L40 130 C40 130 55 115 100 115 C145 115 160 130 160 130 L160 90 C160 55 140 20 100 20 Z" fill="none" stroke="#39d97a" stroke-width="1.2"/>
+      <path d="M70 95 C70 95 85 108 100 108 C115 108 130 95 130 95" fill="none" stroke="#39d97a" stroke-width="1.2"/>
+    </svg>
+    <div>
+      <div class="eyebrow">Security Research &amp; Penetration Testing</div>
+      <h1>I find the way in<br>before <span>someone else does.</span></h1>
+      <p class="hero-sub">Mayur Salve — penetration tester and security researcher. I test web applications and infrastructure the way an attacker would, then hand you a report your engineers can actually act on.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary">Request an audit →</a>
+        <a href="#services" class="btn btn-ghost">See services</a>
+      </div>
+    </div>
+    <div class="terminal" aria-hidden="true">
+      <div class="term-bar">
+        <div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div>
+        <div class="term-title">cyborg_m — vapt-scan</div>
+      </div>
+      <div class="term-body" id="termBody"><div class="scanline" aria-hidden="true"></div></div>
+    </div>
+  </section>
+
+  <div class="trust reveal">
+    <div class="trust-label">Certifications &amp; training — click to verify</div>
+    <div class="badge-row">
+      <a class="badge" href="https://coursera.org/verify/professional-cert/G4KMIG3N8ZDZ" target="_blank" rel="noopener">Google Cybersecurity Professional — Coursera <span class="verify-mark">↗</span></a>
+      <a class="badge" href="https://www.skillfront.com/certifications/SkillFront-SFE016cd91878e6f-55126036129472.pdf" target="_blank" rel="noopener">ISO/IEC 27001 Info Security Associate <span class="verify-mark">↗</span></a>
+      <a class="badge" href="https://courses.redteamleaders.com/exam-completion/60d8e7662c111cd8" target="_blank" rel="noopener">CAISR — Red Team Leaders <span class="verify-mark">↗</span></a>
+      <a class="badge" href="https://learn.opswatacademy.com/certificate/uH_A8IHB6w" target="_blank" rel="noopener">OPSWAT Academy — CIP <span class="verify-mark">↗</span></a>
+      <span class="badge">Cyber Threat Intelligence — arcX</span>
+      <span class="badge">Deloitte Australia — Cyber Job Sim</span>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <section id="why">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Why work with me</div>
+      <h2>What you get from a dedicated researcher</h2>
+      <p class="section-desc">No account managers, no rotating juniors — just direct, hands-on testing.</p>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-item">
+        <div class="why-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+        <div><h4>Direct access</h4><p>You work with the person actually doing the testing, from scoping to the final report.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5M7.5 10l1.7 1.7L13 8"/></svg></div>
+        <div><h4>Manual-first testing</h4><p>Automated scanners give you a checklist. Manual testing finds the exploit chain the checklist missed.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a11 11 0 0 1 16 0"/><path d="M7.3 17.2a6.5 6.5 0 0 1 9.4 0"/><circle cx="12" cy="20" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+        <div><h4>Active research background</h4><p>Ongoing bug bounty work on live-fire targets on HackerOne — not just lab certifications.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10.5 20V4M17 20v-6.5M3 20h18"/></svg></div>
+        <div><h4>Business-impact reporting</h4><p>Findings mapped to what they actually mean for your business, not just a CVSS score.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">What I do</div>
+      <h2>Three ways to find out where you're exposed</h2>
+      <p class="section-desc">Manual testing, not just automated scans — going after what tools miss.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Web App Penetration Testing</h3>
+        <p>Manual testing against the OWASP Top 10 and business-logic flaws — the vulnerabilities automated scanners consistently miss.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M6.8 7.4L11 16.2M17.2 7.4L13 16.2M7.2 6h9.6"/></svg></div>
+        <h3>Network &amp; Infrastructure Audits</h3>
+        <p>Assessment of internal and external network surfaces for misconfigurations, exposed services, and weak access controls.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h9l3 3v16H6z"/><path d="M15 2.5v3h3"/><path d="M9 12h6M9 15.5h6M9 8.5h3"/></svg></div>
+        <h3>Full VAPT Reports</h3>
+        <p>Severity-rated findings with proof-of-concept, business impact, and clear remediation steps — written for engineers and leadership alike.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="expertise">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Areas of focus</div>
+      <h2>Vulnerability classes I specialize in</h2>
+    </div>
+    <div class="tag-cloud reveal">
+      <span class="tag">Authentication Bypass</span>
+      <span class="tag">Cache Poisoning &amp; Deception</span>
+      <span class="tag">Information Disclosure</span>
+      <span class="tag">Business Logic Flaws</span>
+      <span class="tag">Server-Side Request Forgery (SSRF)</span>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">How it works</div>
+      <h2>A straightforward engagement process</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="process-num">1</div>
+        <h3>Scope &amp; Rules of Engagement</h3>
+        <p>We define target systems, testing windows, and boundaries in writing before any testing begins.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">2</div>
+        <h3>Manual Testing &amp; Discovery</h3>
+        <p>Hands-on assessment against OWASP methodology, business logic analysis, and manual exploitation attempts.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">3</div>
+        <h3>Report &amp; Remediation Support</h3>
+        <p>A detailed VAPT report with severity ratings and remediation steps, plus support while your team closes the gaps.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="photo-frame">
+          <img src="images/profile.jpg" alt="Mayur Salve" onerror="this.parentElement.innerHTML='<div class=&quot;photo-placeholder&quot;>Add images/profile.jpg</div>'">
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-eyebrow">About</div>
+        <h2 style="margin-bottom:20px;">Mayur Salve, aka Cyborg_m</h2>
+        <p>I'm a penetration tester and security researcher with <strong>1–2 years</strong> of hands-on experience finding and reporting real vulnerabilities — not just running scanners and forwarding the output.</p>
+        <p>I actively research and report vulnerabilities as part of my work on <strong>HackerOne</strong>.</p>
+        <p>I work directly with founders and engineering teams — no account managers, no upsell calls. You talk to the person doing the testing.</p>
+        <div class="stat-list">
+          <div class="stat"><span class="stat-label">Experience</span><span class="stat-value">1–2 years, hands-on</span></div>
+          <div class="stat"><span class="stat-label">Platform</span><span class="stat-value">Active on HackerOne</span></div>
+          <div class="stat"><span class="stat-label">Track record</span><span class="stat-value">Active bug bounty researcher</span></div>
+          <div class="stat"><span class="stat-label">Engagement</span><span class="stat-value">Direct, no middlemen</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERT GALLERY -->
+  <section id="certs">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Proof of work</div>
+      <h2>Certifications &amp; accreditation</h2>
+      <p class="section-desc">Screenshots of completed certifications — click any verified badge above to check credentials directly.</p>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/google-cybersecurity.jpg" alt="Google Cybersecurity Professional Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/google-cybersecurity.jpg</div>'"></div>
+        <div class="cert-caption">Google Cybersecurity — Coursera</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/iso27001.jpg" alt="ISO 27001 Information Security Associate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/iso27001.jpg</div>'"></div>
+        <div class="cert-caption">ISO/IEC 27001 — SkillFront</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/caisr.jpg" alt="CAISR Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/caisr.jpg</div>'"></div>
+        <div class="cert-caption">CAISR — Red Team Leaders</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/opswat.jpg" alt="OPSWAT Academy CIP Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/opswat.jpg</div>'"></div>
+        <div class="cert-caption">Introduction to CIP — OPSWAT</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/arcx.jpg" alt="Cyber Threat Intelligence Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/arcx.jpg</div>'"></div>
+        <div class="cert-caption">Cyber Threat Intelligence — arcX</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/icorx.jpg" alt="ICORx Cyber Security Professional Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/icorx.jpg</div>'"></div>
+        <div class="cert-caption">Cyber Security Professional — ICORx</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/learntube.jpg" alt="LearnTube Cybersecurity Assessment Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/learntube.jpg</div>'"></div>
+        <div class="cert-caption">Cybersecurity Assessment — LearnTube.ai</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-img-box"><img src="images/certs/deloitte.jpg" alt="Deloitte Cyber Job Simulation Certificate" onerror="this.parentElement.innerHTML='<div class=&quot;cert-placeholder&quot;>Add images/certs/deloitte.jpg</div>'"></div>
+        <div class="cert-caption">Cyber Job Simulation — Deloitte (Forage)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-box reveal">
+      <div class="section-head">
+        <div class="section-eyebrow" style="text-align:center;">Get in touch</div>
+        <h2>Ready to find out what's exposed?</h2>
+        <p class="section-desc">Send a short note about your app or network and I'll get back to you with next steps.</p>
+      </div>
+      <div class="contact-layout">
+        <div>
+          <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact">
+            <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required placeholder="Tell me a bit about your app or network..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send message</button>
+            <div class="form-success" id="formSuccess">✓ Message sent — I'll get back to you soon.</div>
+          </form>
+        </div>
+        <div>
+          <div class="contact-methods">
+            <a href="mailto:mayurbughunter@gmail.com">✉ mayurbughunter@gmail.com</a>
+            <a href="mailto:cyborg_m@wearehackerone.com">✉ cyborg_m@wearehackerone.com</a>
+          </div>
+          <div class="social-row">
+            <a href="https://hackerone.com/cyborg_m?type=user" target="_blank" rel="noopener">HackerOne</a>
+            <a href="https://x.com/MayurSalve333" target="_blank" rel="noopener">X / Twitter</a>
+            <a href="https://www.linkedin.com/in/mayur-salve-204432276" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Cyborg_m — Mayur Salve. Security research &amp; penetration testing.</footer>
+
+<script>
+  const lines = [
+    { text: '<span class="prompt">$</span> vapt-scan --target client-app.io', cls: 'cmd', delay: 0 },
+    { text: '[+] Initializing reconnaissance...', cls: 'dim', delay: 500 },
+    { text: '[+] Enumerating endpoints... 247 discovered', cls: 'ok', delay: 1000 },
+    { text: '[!] Testing authentication flows', cls: 'warn', delay: 1600 },
+    { text: '[+] Analyzing business logic paths', cls: 'ok', delay: 2200 },
+    { text: '[!] Checking for SSRF vectors', cls: 'warn', delay: 2800 },
+    { text: '[✓] Scan complete — compiling VAPT report', cls: 'ok', delay: 3500 },
+    { text: '<span class="prompt">$</span> <span class="cursor"></span>', cls: 'cmd', delay: 4200 },
+  ];
+  const termBody = document.getElementById('termBody');
+  lines.forEach(line => {
+    const el = document.createElement('div');
+    el.className = 'term-line ' + line.cls;
+    el.style.animationDelay = line.delay + 'ms';
+    el.innerHTML = line.text;
+    termBody.appendChild(el);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(() => {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }).catch(() => {
+      alert('Something went wrong — please email me directly instead.');
+    });
+  });
+</script>
+
+</body>
+</html>
